@@ -5,4 +5,4 @@
 
 
 # CONFIGURANDO O BANCO DE DADOS:
-#
+# Altere o tipo de banco de dados no arquivo config.json
