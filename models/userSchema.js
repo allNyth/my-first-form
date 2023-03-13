@@ -10,12 +10,22 @@ const userSchema = new mongoose.Schema({
         type: String,
         require: true,
         unique: true,
-        match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    },
+        validate: {
+            validator: function(v) {
+              return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+            },
+            message: props => `${props.value} invalid email`
+          }
+        },
     password: {
         type: String,
         required: true,
-        match: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
+        validate: {
+            validator: function(v) {
+                return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/.test(v);
+            },
+            message: props => `${props.value} invalid password`
+        }
     },
     createdAt: {
         type: Date,
@@ -23,5 +33,5 @@ const userSchema = new mongoose.Schema({
         default: new Date(Date.now())
     }
 }) 
-const User = mongoose.model('user novo', userSchema)
+const User = mongoose.model('user', userSchema)
 module.exports = User

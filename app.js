@@ -2,12 +2,15 @@ const dotenv = require('dotenv').config()
 const express = require('express');
 const app = express();
 const router = require('./routers/index');
-const PORT = process.env.PORT
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const PORT = process.env.PORT;
 
 // configurando o express para receber requisiçoes json
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({ extended: true }))
+// configurando a view engine EJS no express
+app.set('view engine', 'ejs')
+app.use(express.static(__dirname + '/public')) //configura a pasta public para enviar arquivos estaticos MIME-TYPES
 
 const db = require('./database/connect')
 
