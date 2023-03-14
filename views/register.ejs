@@ -7,6 +7,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>nyth firts form</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
+  <script>
+    const cepInput = document.querySelector('#cep');
+
+cepInput.addEventListener('input', (event) => {
+  const cep = event.target.value.replace(/\D/g, '');
+  
+  if (cep.length === 8) {
+    cepInput.value = `${cep.slice(0, 5)}-${cep.slice(5)}`;
+  }
+});
+
+  </script>
+
 </head>
 
 <body>
@@ -38,40 +51,45 @@
         </div>
 
         <div class="formbold-input-flex">
-          <div>
-            <label for="email" class="formbold-form-label"> Email </label>
-            <input type="email" name="email" id="email" class="formbold-form-input" />
-          </div>
+
           <div>
             <label for="phone" class="formbold-form-label"> Telefone </label>
             <input type="text" name="phone" id="phone" class="formbold-form-input" />
           </div>
-        </div>
-        <div class="formbold-input-flex">
-
           <div>
             <label for="post" class="formbold-form-label"> CEP </label>
-            <input type="text" name="post" id="post" class="formbold-form-input" />
+            <input type="text" name="cep" id="cep" class="formbold-form-input" maxlength="8" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+
           </div>
+        </div>
+        <div class="formbold-mb-4">
+          <div>
+
+            <label for="address" class="formbold-form-label">
+              Endereço
+            </label>
+            <input type="text" name="address" id="address" class="formbold-form-input" />
+          </div>
+          <div>
+            <label for="number" class="formbold-form-label-number">Nº</label>
+            <input type="text" name="number" id="number" class="formbold-form-input" pattern="[0-9]*"
+              onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+          </div>
+        </div>
+
+        <div class="formbold-input-flex">
           <div>
             <label for="post" class="formbold-form-label"> Cidade </label>
             <input type="text" name="post" id="post" class="formbold-form-input" />
           </div>
+          <div>
+            <label for="address2" class="formbold-form-label">
+              Bairro
+            </label>
+            <input type="text" name="address2" id="address2" class="formbold-form-input" />
+          </div>
         </div>
 
-        <div class="formbold-mb-3">
-          <label for="address" class="formbold-form-label">
-            Endereço
-          </label>
-          <input type="text" name="address" id="address" class="formbold-form-input" />
-        </div>
-
-        <div class="formbold-mb-3">
-          <label for="address2" class="formbold-form-label">
-            Bairro
-          </label>
-          <input type="text" name="address2" id="address2" class="formbold-form-input" />
-        </div>
 
         <div class="formbold-input-flex">
           <div>
@@ -98,12 +116,12 @@
                 </span>
               </div>
             </div>
-            I agree to the defined
-            <a href="#"> terms, conditions, and policies</a>
+            Eu aceito os
+            <a href="#"> termos de uso e politica de privacidade</a>
           </label>
         </div>
 
-        <button class="formbold-btn">Register Now</button>
+        <button class="formbold-btn">Registrar-se</button>
       </form>
     </div>
   </div>

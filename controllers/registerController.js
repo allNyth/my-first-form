@@ -4,36 +4,31 @@ const bcrypt = require('bcrypt')
 const saltRounds = 10
 
 exports.registerUser = async (req, res) => {
-    const { email, password, firstname, lastname, number } = req.body
-    async function createUser(email, password, firstname, lastname, number) {
+    const { email, password, firstname, lastname, phone, cep } = req.body
+    async function createUser(email, password, firstname, lastname, phone, cep) {
         const newUser = new User({
             email,
+            password,
             firstname,
             lastname,
-            number
+            phone,
+            cep
         });
         try {
             const regexPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/.test(password)
-            if (regexPass) {
-                console.log(regexPass)
-                const hashedPass = await bcrypt.hash(password, saltRounds)
-                newUser.password = hashedPass
-
-            } else {
-                return res.status(401).json('Crie uma senha forte, com Letras Maisculas, minisculas e caracteres especias como @!#$%')
+            if (!regexPass) {
+               return res.json({password: false})
             }
-        } catch (error) {
-            console.error(error)
-        }
-        try {
-
-            const savedUser = await newUser.save();
-            console.log('Novo usuario criado com sucesso ', savedUser)
-            return res.status(201).send('Usuario cadastrado com sucesso')
+            const hashedPass = await bcrypt.hash(password, saltRounds);
+            newUser.password = hashedPass
+            const savedUser = await newUser.save()
+            console.log(savedUser)
+            return res.json(`Usuario ${savedUser.email} criado com sucesso`)
+            
         } catch (error) {
             console.error(error)
             res.send(error.message)
         }
     }
-    createUser(email, password, firstname, lastname, number)
+    createUser(email, password, firstname, lastname, phone, cep)
 }

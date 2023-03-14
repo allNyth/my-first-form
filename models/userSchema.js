@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const moment = require('moment')
 
 
 const userSchema = new mongoose.Schema({
@@ -44,7 +45,7 @@ const userSchema = new mongoose.Schema({
             message: props => `${props.value} invalid password`
         }
     },
-    number: {
+    phone: {
         type: String,
         required: true,
         unique: true,
@@ -55,12 +56,20 @@ const userSchema = new mongoose.Schema({
             message: props => `${props.value} invalid number`
         }
     },
-    createdAt: {
-        type: Date,
+    cep: {
+        type: String,
         required: true,
-        default: new Date(Date.now()),
-        index: false
-    }
+        validate: {
+            validator: function (v) {
+                return /^\d{8}$/.test(v)
+            },
+            message: props => `${props.value} invalid cep`
+        }
+    },
+    createdAt: {
+        type: String,
+        default: moment().format('DD/MM/YYYY HH:mm:ss'),
+    },
 },
     { autoIndex: false },
     {
